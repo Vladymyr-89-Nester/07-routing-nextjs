@@ -1,3 +1,5 @@
+/* components/Footer.module.css */
+
 .footer {
     padding: 20px;
     background-color: #f0f0f0;
@@ -11,6 +13,10 @@
     display: flex;
     justify-content: center;
     gap: 20px;
+}
+
+.footerText {
+    margin-bottom: 28px;
 }
 
 .footer a {

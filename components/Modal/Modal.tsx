@@ -1,6 +1,6 @@
-import { useEffect, type ReactNode } from "react";
-import css from "./Modal.module.css";
-import { createPortal } from "react-dom";
+import { useEffect, type ReactNode } from 'react';
+import css from './Modal.module.css';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
   children: ReactNode;
@@ -10,16 +10,16 @@ interface ModalProps {
 export default function Modal({ children, onClose }: ModalProps) {
   useEffect(() => {
     const handleEscKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === 'Escape') onClose();
     };
 
     const prevOverflow = document.body.style.overflow;
 
-    document.addEventListener("keydown", handleEscKey);
-    document.body.style.overflow = "hidden";
+    document.addEventListener('keydown', handleEscKey);
+    document.body.style.overflow = 'hidden';
 
     return () => {
-      document.removeEventListener("keydown", handleEscKey);
+      document.removeEventListener('keydown', handleEscKey);
       document.body.style.overflow = prevOverflow;
     };
   }, [onClose]);
@@ -31,8 +31,8 @@ export default function Modal({ children, onClose }: ModalProps) {
   return createPortal(
     <div
       className={css.backdrop}
-      role="dialog"
-      aria-modal="true"
+      role='dialog'
+      aria-modal='true'
       onClick={onClose}
     >
       <div className={css.modal} onClick={handleModalClick}>

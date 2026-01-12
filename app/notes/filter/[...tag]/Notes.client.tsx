@@ -14,7 +14,11 @@ import Loader from '@/components/Loader/Loader';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function NotesClient() {
+interface Props {
+  tag?: string;
+}
+
+export default function NotesClient({ tag }: Props) {
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
   const [queryDebounce] = useDebounce(query.trim(), 700);
@@ -23,14 +27,16 @@ export default function NotesClient() {
   const prevQuery = useRef('');
 
   const { data, isLoading, isError } = useQuery({
-    queryKey: ['notes', page, queryDebounce],
+    queryKey: ['notes', page, queryDebounce, tag],
     queryFn: () =>
       fetchNotes({
         page: page,
         perPage: 12,
         search: queryDebounce,
+        tag: tag === 'all' ? undefined : tag,
       }),
     placeholderData: keepPreviousData,
+    refetchOnMount: false,
   });
 
   useEffect(() => {
