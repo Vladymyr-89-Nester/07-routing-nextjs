@@ -7,13 +7,13 @@ import { fetchNotes } from '@/lib/api';
 import NotesClient from './Notes.client';
 
 interface Props {
-  params: Promise<{ tag: string[] }>;
+  params: Promise<{ slug: string[] }>;
 }
 
 export default async function NotesPage({ params }: Props) {
   const queryClient = new QueryClient();
   const {
-    tag: [tag],
+    slug: [tag],
   } = await params;
 
   await queryClient.prefetchQuery({
