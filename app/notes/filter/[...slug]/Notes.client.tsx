@@ -26,7 +26,7 @@ export default function NotesClient({ tag }: Props) {
   const hasShownEmptyToast = useRef(false);
   const prevQuery = useRef('');
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['notes', page, queryDebounce, tag],
     queryFn: () =>
       fetchNotes({
@@ -46,10 +46,7 @@ export default function NotesClient({ tag }: Props) {
     }
 
     const shouldShowToast =
-      !isLoading &&
-      !isError &&
-      queryDebounce !== '' &&
-      data?.notes.length === 0;
+      !isLoading && !error && queryDebounce !== '' && data?.notes.length === 0;
 
     if (shouldShowToast && !hasShownEmptyToast.current) {
       toast('No notes found for your search', {
@@ -58,7 +55,7 @@ export default function NotesClient({ tag }: Props) {
       });
       hasShownEmptyToast.current = true;
     }
-  }, [data, isLoading, isError, queryDebounce]);
+  }, [data, isLoading, error, queryDebounce]);
 
   const handleSearchChange = (query: string) => {
     setQuery(query);
@@ -91,8 +88,8 @@ export default function NotesClient({ tag }: Props) {
         </button>
       </header>
       {isLoading && <Loader />}
-      {isError && <ErrorMessage />}
-      {!isLoading && !isError && data && data.notes.length > 0 && (
+      {error && <ErrorMessage />}
+      {!isLoading && !error && data && data.notes.length > 0 && (
         <NoteList notes={data.notes} />
       )}
       {isOpenModal && (

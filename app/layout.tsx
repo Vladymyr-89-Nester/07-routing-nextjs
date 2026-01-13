@@ -20,9 +20,11 @@ export default function RootLayout({ children, modal }: Props) {
       <body>
         <TanStackProvider>
           <Header />
-          <main>{children}</main>
+          <main>
+            {children}
+            {modal}
+          </main>
           <Footer />
-          {modal}
         </TanStackProvider>
       </body>
     </html>
